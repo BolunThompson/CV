@@ -1,0 +1,300 @@
+\documentclass[11pt,letterpaper]{moderncv}
+\usepackage{multiaudience}
+\usepackage{geometry}
+
+\SetNewAudience{industry}
+\SetNewAudience{academia}
+\moderncvstyle{banking}
+\moderncvcolor{blue}
+
+\usepackage{xspace}
+\usepackage{fontspec}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+
+\def\CurrentAudience{industry} % industry, academia, or policy
+
+\SetNewAudience{industry}
+\SetNewAudience{academia}
+\SetNewAudience{policy}
+
+\csdef{resumeconfig@industry}{%
+  \def\ResumeMarginWidth{.70in}%
+  \def\ResumeMarginHeight{.80in}%
+  % TODO: Consider increasing bottom top margin, removing quote h
+  % \def\ResumeHeadWidth{0.90\textwidth}% etc
+}
+
+\csdef{resumeconfig@academia}{%
+  % Make resume margin bigger if I can afford it!!! 
+  \def\ResumeMargin{0.50in}%
+  % here since it has to be in the preamble
+  \quote{Research Interests: programming languages, software systems, incremental computation}
+}
+
+% EXAMPLE -- unused
+\csdef{resumeconfig@policy}{%
+  \def\ResumeMargin{0.85in}%
+}
+
+\ifcsdef{resumeconfig@\CurrentAudience}
+  {\csuse{resumeconfig@\CurrentAudience}}
+  {%
+    \PackageError{resume}
+      {Unknown audience `\CurrentAudience'}
+      {Valid audiences are industry, academia, and policy.}%
+  }
+
+\ifcsdef{ResumeMargin}
+  {\geometry{margin=\ResumeMargin}}
+  {%
+    \ifcsdef{ResumeMarginWidth}
+      {\geometry{
+         left=\ResumeMarginWidth,
+         right=\ResumeMarginWidth,
+         top=\ResumeMarginHeight,
+         bottom=\ResumeMarginHeight
+       }}
+      {%
+        \PackageError{resume}
+          {No resume margins defined}
+          {Define either \string\ResumeMargin\space or both
+           \string\ResumeMarginWidth\space and
+           \string\ResumeMarginHeight.}%
+      }%
+  }
+  
+\newcommand{\entry}[4]{%
+  \begin{tabular*}{\maincolumnwidth}[t]{%
+    l@{\extracolsep{\fill}}r%
+  }%
+    \textbf{#1} & \textit{#2}%
+    \ifstrempty{#3}{}{%
+      \\
+      \multicolumn{2}{@{}l@{}}{%
+        \makebox[\maincolumnwidth][l]{#3}%
+      }%
+    }%
+  \end{tabular*}%
+  \ifstrempty{#4}{}{%
+    \\%
+    \begin{minipage}[b]{\maincolumnwidth}%
+      #4%
+    \end{minipage}%
+  }%
+  \par%
+  \vspace{-\dp\strutbox}%
+  \addvspace{.5em}%}
+}
+
+\makeatletter
+
+\RenewDocumentCommand{\section}{sm}{%
+  \par\addvspace{2ex}% changed from 2.5ex
+  \phantomsection{}%
+  \addcontentsline{toc}{section}{#2}%
+  \if@left\else\if@fullrules\else\if@mixedrules\else%
+    \sectionrule\fi\fi\fi%
+  \strut\sectionstyle{#2}%
+  \if@fullrules%
+    \sectionrule%
+  \else\if@mixedrules%
+    \sectionrule%
+  \else\if@right\else%
+    \sectionrule\fi\fi\fi%
+  \par\nobreak\addvspace{1ex}\@afterheading%
+}
+
+\makeatother
+
+
+\newcommand{\pync}{{\scshape Pync}\xspace}
+
+\newenvironment{presentationlist}{%
+  \begin{itemize}[
+    label={},
+    leftmargin=0pt,
+    labelsep=0pt,
+    itemindent=0pt,
+    topsep=0pt,
+    itemsep=0.4ex,
+    parsep=0pt,
+    partopsep=0pt,
+    before=\vspace{0.5ex}
+  ]%
+}{%
+  \end{itemize}%
+}
+
+\newcommand{\presentationitem}[2]{%
+  \item
+  \noindent
+  \begin{minipage}[t]{0.76\linewidth}%
+    #1%
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.22\linewidth}%
+    \raggedleft\textit{#2}%
+  \end{minipage}%
+}
+
+
+% for the quote
+\patchcmd
+  {\recomputecvheadlengths}
+  {0.65\textwidth}
+  {0.9\textwidth} % ideally would be .85
+  {}
+  {}
+% Ideally would be 1em
+\patchcmd{\makecvhead}{\\[2.5em]}{\\[.85em]}{}{}
+\patchcmd{\makecvhead}{\\[2.5em]}{\\[.85em]}{}{} % has to be duplicated for some reason
+% TODO: Fix.
+\patchcmd{\section}
+  {\addvspace{2.5ex}}
+  {\addvspace{1.8ex}}
+  {}
+  {\PackageWarning{resume}{Could not patch section spacing}}
+
+% Personal Information
+\name{Bolun}{Thompson}
+\email{bolunthompson@ucla.edu}
+\phone{(858) 999-9567}
+\homepage{bolun.dev}
+\social[github]{bolunthompson}
+\social[linkedin]{bolunthompson}
+
+
+\begin{document}
+
+\makecvtitle\section{Education}
+\entry
+  {B.S. in Computer Science}
+  {Expected Graduation: 06/2028}
+  {University of California, Los Angeles (UCLA) \hfill GPA: 3.87}
+  {Coursework: Programming Languages, Operating Systems, Algorithms,
+   Distributed Systems, Security}
+   
+\cvitem[0pt]{Program}{Oregon Programming Languages Summer School; studied Rocq and separation logic \quad \hfill \textit{06/2026}}
+\vspace{-\dp\strutbox}% done in the entry, but not here since cvitem ends
+
+\begin{shownto}{academia}
+\section{Research Experience}
+\end{shownto}
+
+\begin{shownto}{industry}
+\section{Experience}
+\end{shownto}
+
+\entry
+  {Undergraduate Researcher}
+  {02/2025--Present}
+  {Programmable Software Systems Lab, UCLA, mentored by Prof. Konstantinos Kallas}
+  {%
+    \begin{itemize}[leftmargin=*,topsep=8pt,itemsep=4pt,parsep=0pt]
+      \item Designed and implemented \pync, an $11$k line incremental execution system for Python that tracks function dependencies and effects to reuse prior computations across script executions. Achieved up to $10\times$ speedups when re-executing eight real-world data science workloads.
+      \begin{shownto}{industry} Presented work to three computer science workshops.\space
+      \end{shownto} Manuscript in preparation.
+
+      \item Built and evaluated a 700 line Python front-end for hS, a speculative parallelization system for shell scripts. Uses AST transformations to identify and extract subprocess calls while preserving script semantics.
+      Enabled hS to achieve up to $8\times$ speedups on five subprocess-heavy real-world Python workloads.
+
+    \begin{shownto}{industry}  
+      \cvitem{Publication}{\textit{hS: Speculative Script Reordering at Subprocess Granularity}. Co-author. \hfill OSDI '26}
+    \end{shownto}
+    \end{itemize}%
+  }
+
+
+\begin{shownto}{academia}
+\section{Publications}
+
+\entry
+  {hS: Speculative Script Reordering at Subprocess Granularity.}
+  {OSDI~'26}
+  {}
+  {Georgios Liargkovas, Di Jin, Tianyu (Ezri) Zhu, Dan Liu,
+   \textbf{A. Bolun Thompson}, Anirudh Narsipur, Seong-Heon Jung,
+   Siddhartha Prasad, Diomidis Spinellis, Michael Greenberg,
+   Konstantinos Kallas, Nikos Vasilakis.}
+
+% \entry
+%  {\pync: Function-Level Incremental Execution for Python Scripts.}
+%  {2026}
+%  {}
+%  {A. Bolun Thompson.
+%   PLDI '26 Student Research Competition.}
+\end{shownto}
+
+\begin{shownto}{academia}
+\section{Honors, Awards and Service}
+\end{shownto}
+
+\begin{shownto}{industry}
+\section{Honors and Awards}
+\end{shownto}
+
+\entry
+  {First Place, undergraduate division --- PLDI '26 Student Research Competition}
+  {06/2026}
+  {}
+  {Presented \pync, an automatic incremental execution system
+   for Python.}
+\begin{shownto}{academia}
+\entry
+  {Student Volunteer --- PLDI '26}
+  {06/2026}
+  {}
+  {}
+\end{shownto}
+\section{Open-Source Contributions and Projects}
+% TODO: Post on GH, review if asked about before interview.
+% TODO Post on github.
+\entry
+  {Secure Cloud Storage}
+  {03/2026}
+  {}
+  {Built a 2k-line secure cloud storage client in Go on top of an untrusted server, using AES/HMAC primitives.
+  Maintains confidentiality and integrity. Supports multiple users, file sharing, and revocation.
+  }
+\begin{shownto}{industry}
+% Maybe mention security project, DS project, review these implementations?
+\entry{Paper Plane}{09/2025--11/2025}{}{
+Co-developed a full-stack flight-log web application that enables pilots to manage their flight history. Built the REST API backend with Express.js and TypeScript, including user authentication; designed the Prisma/SQLite data model; and wrote backend integration tests executed in CI.}
+
+\end{shownto}
+\entry{PaSh}{11/2024--02/2025}{}{
+Contributed N pull requests to PaSh, a system for automatically parallelizing shell scripts. Added Ubuntu 24.04 compatibility and completed a new Bash front-end by implementing word-expansion.
+% TODO: Add somethign about impact.
+}
+
+\begin{shownto}{academia}
+\section{Research Presentations}
+
+\entry
+  {\pync: Python Incremental Execution}
+  {}
+  {}
+  {%
+  \begin{presentationlist}    
+    \presentationitem
+      {Talk, Undergraduate Research Showcase, UCLA}
+      {05/2025, 05/2026}
+    \presentationitem
+      {Invited Talk, SoCal PLs Day, University of Southern California}
+      {02/2026}
+    \presentationitem
+      {Talk, 5th PaSh Workshop, Brown University}
+      {09/2025}
+  \end{presentationlist}
+  }
+\end{shownto} 
+
+\section{Skills}
+
+\cvitem[0.2em]{Languages}
+  {Python, C, C++, JavaScript, Rust, Go, Shell, OCaml, Rocq, Dafny, Prolog}
+
+\cvitem{Tools}
+  {Git, Docker, GitHub Actions, Linux, Pytest, \LaTeX}
+\end{document}
