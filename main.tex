@@ -12,7 +12,7 @@
 \usepackage{etoolbox}
 \usepackage{enumitem}
 
-\def\CurrentAudience{industry} % industry, academia, or policy
+\def\CurrentAudience{academia} % industry, academia, or policy
 
 \SetNewAudience{industry}
 \SetNewAudience{academia}
@@ -29,7 +29,7 @@
   % Make resume margin bigger if I can afford it!!! 
   \def\ResumeMargin{0.50in}%
   % here since it has to be in the preamble
-  \quote{Research Interests: programming languages, software systems, incremental computation}
+  \quote{Research Interests: formal methods, software systems, incremental computation}
 }
 
 % EXAMPLE -- unused
@@ -174,7 +174,8 @@
   {University of California, Los Angeles (UCLA) \hfill GPA: 3.87}
   {Coursework: Programming Languages, Operating Systems, Algorithms,
    Distributed Systems, Security}
-   
+
+\cvitem[0pt]{Study Abroad}{Hong Kong University of Science and Technology \quad \hfill \textit{09/2026--12/2026}}
 \cvitem[0pt]{Program}{Oregon Programming Languages Summer School; studied Rocq and separation logic \quad \hfill \textit{06/2026}}
 \vspace{-\dp\strutbox}% done in the entry, but not here since cvitem ends
 
@@ -192,15 +193,18 @@
   {Programmable Software Systems Lab, UCLA, mentored by Prof. Konstantinos Kallas}
   {%
     \begin{itemize}[leftmargin=*,topsep=8pt,itemsep=4pt,parsep=0pt]
-      \item Designed and implemented \pync, an $11$k line incremental execution system for Python that tracks function dependencies and effects to reuse prior computations across script executions. Achieved up to $10\times$ speedups when re-executing eight real-world data science workloads.
-      \begin{shownto}{industry} Presented work to three computer science workshops.\space
-      \end{shownto} Manuscript in preparation.
+      \item Designed and implemented \pync, an $18$k line incremental execution system for Python that tracks function dependencies and effects to reuse prior computations across script executions.  Achieved up to $60\times$ speedups when re-executing twenty real-world data science workloads.  \begin{shownto}{academia} Manuscript in preparation. \end{shownto}
+      \begin{shownto}{industry}
+      \par
+      \cvitem{Talks}{SoCal PLs Day, University of Southern California (02/2026); 5th PaSh Workshop, Brown (09/2025)} 
+      \end{shownto}
+     
 
-      \item Built and evaluated a 700 line Python front-end for hS, a speculative parallelization system for shell scripts. Uses AST transformations to identify and extract subprocess calls while preserving script semantics.
+      \item Built and evaluated a Python front-end for hS, a speculative parallelization system for shell scripts. Uses AST transformations to identify and extract subprocess calls while preserving script semantics.
       Enabled hS to achieve up to $8\times$ speedups on five subprocess-heavy real-world Python workloads.
 
     \begin{shownto}{industry}  
-      \cvitem{Publication}{\textit{hS: Speculative Script Reordering at Subprocess Granularity}. Co-author. \hfill OSDI '26}
+      \cvitem{Publication}{\textit{hS: Speculative Script Reordering at Subprocess Granularity}. Co-author. \hfill \textit{OSDI '26}}
     \end{shownto}
     \end{itemize}%
   }
@@ -260,11 +264,11 @@
 \begin{shownto}{industry}
 % Maybe mention security project, DS project, review these implementations?
 \entry{Paper Plane}{09/2025--11/2025}{}{
-Co-developed a full-stack flight-log web application that enables pilots to manage their flight history. Built the REST API backend with Express.js and TypeScript, including user authentication; designed the Prisma/SQLite data model; and wrote backend integration tests executed in CI.}
+Co-developed a full-stack flight-log web application in team of five that enables pilots to manage their flight history. Built the REST API backend with Express.js and TypeScript, including user authentication; designed the Prisma/SQLite data model; and wrote backend integration tests executed in CI.}
 
 \end{shownto}
 \entry{PaSh}{11/2024--02/2025}{}{
-Contributed N pull requests to PaSh, a system for automatically parallelizing shell scripts. Added Ubuntu 24.04 compatibility and completed a new Bash front-end by implementing word-expansion.
+Contributed 25 pull requests to PaSh, a system for automatically parallelizing shell scripts. Added Ubuntu 24.04 compatibility and completed a new Bash front-end by implementing word-expansion.
 % TODO: Add somethign about impact.
 }
 
@@ -281,7 +285,7 @@ Contributed N pull requests to PaSh, a system for automatically parallelizing sh
       {Talk, Undergraduate Research Showcase, UCLA}
       {05/2025, 05/2026}
     \presentationitem
-      {Invited Talk, SoCal PLs Day, University of Southern California}
+      {Contributed Talk, SoCal PLs Day, University of Southern California}
       {02/2026}
     \presentationitem
       {Talk, 5th PaSh Workshop, Brown University}
@@ -293,8 +297,11 @@ Contributed N pull requests to PaSh, a system for automatically parallelizing sh
 \section{Skills}
 
 \cvitem[0.2em]{Languages}
-  {Python, C, C++, JavaScript, Rust, Go, Shell, OCaml, Rocq, Dafny, Prolog}
+  {Python, C, C++, JavaScript, HTML/CSS, Rust, Go, Shell, OCaml, Rocq, Dafny, Prolog}
 
 \cvitem{Tools}
-  {Git, Docker, GitHub Actions, Linux, Pytest, \LaTeX}
+  {Git, Docker, GitHub Actions, Linux, Pytest, GDB, React, \LaTeX}
+\begin{shownto}{policy}
+\cvitem[0.2em]{Communication}{Talks, technical writing, research posters}
+\end{shownto}
 \end{document}
