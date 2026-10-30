@@ -27,7 +27,7 @@
 
 \csdef{resumeconfig@academia}{%
   % Make resume margin bigger if I can afford it!!! 
-  \def\ResumeMargin{0.50in}%
+  \def\ResumeMargin{0.60in}%
   % here since it has to be in the preamble
   \quote{Research Interests: programming languages, software systems, incremental computation}
 }
@@ -156,10 +156,12 @@
   {}
   {\PackageWarning{resume}{Could not patch section spacing}}
 
+\patchcmd{\makehead}{0.8\textwidth}{\textwidth}{}{}
+
 % Personal Information
 \name{Bolun}{Thompson}
 \email{bolunthompson@ucla.edu}
-\phone{(858) 999-9567}
+\ifdefstring{\CurrentAudience}{academia}{}{\phone{(858) 999-9567}}
 \homepage{bolun.dev}
 \social[github]{bolunthompson}
 \social[linkedin]{bolunthompson}
